@@ -1,0 +1,84 @@
+.i-textarea,
+.i-input,
+.i-select {
+
+    textarea,
+    input,
+    select {
+
+        @apply border-[2px] border-slate-200;
+
+        &:focus {
+            @apply border-blue-500;
+        }
+
+        &:not(.invalid):focus {
+            @apply border-blue-500;
+
+            & ~ .icon-wrapper {
+                @apply text-blue-500;
+            }
+        }
+
+        & ~ .icon-wrapper {
+            @apply text-slate-400;
+        }
+
+        &.invalid {
+            @apply border-red-300;
+            
+            & ~ .icon-wrapper {
+                @apply text-red-500;
+            }
+        }
+    }
+}
+
+.i-table {
+    @apply w-full text-[90%] leading-8 table-auto;
+
+    tr {
+        @apply border-b;
+    }
+
+    td, th {
+        @apply p-[10px] truncate;
+
+        &:not(.whitespace-normal) {
+            @apply whitespace-nowrap;
+        }
+    }
+
+    thead {
+        @apply font-bold bg-slate-50/75;
+
+        th {
+            @apply text-left whitespace-nowrap;
+        }
+    }
+
+    tbody {
+        tr:hover {
+            @apply bg-slate-50/75;
+        }
+    }
+}
+
+.i-loading {
+    @apply overflow-hidden relative block h-6 rounded opacity-25;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: linear-gradient(to right, rgba(0, 0, 0, .1) 8%, rgba(0, 0, 0, .2) 18%, rgba(0, 0, 0, .1) 33%);
+    background-size: 1000px 104px;
+}
+@keyframes placeHolderShimmer{
+    0%{
+        background-position: -468px 0
+    }
+    100%{
+        background-position: 468px 0
+    }
+}

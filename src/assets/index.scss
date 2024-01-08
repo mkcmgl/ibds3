@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb:hover {
+	border-radius: 9px;
+	border: solid 6px transparent;
+	background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover,
+*::-webkit-scrollbar-thumb:active {
+	border: solid 5px transparent;
+}
+*::-webkit-scrollbar {
+	@apply min-h-[18px] min-w-[10px];
+}
+*::-webkit-scrollbar-thumb {
+	@apply bg-slate-300;
+
+	&:hover,
+	&:active {
+		@apply bg-slate-400;
+	}
+}
+
+#app {
+	@apply min-h-screen bg-[#F0F7FD];
+}
+
+.timestamp::after {
+	@apply absolute -right-[calc(theme('space.2')+1px)] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-[#7561F8];
+	content: ' ';
+}
+
+.timestamp[active="true"]::before,
+.timestamp.active::before {
+	@apply absolute -right-[calc(theme('space.2')+5px)] top-1/2 -translate-y-1/2 w-6 h-6 rounded-full border-[#7561F8] border-2 bg-white;
+	content: ' ';
+}
+
+.detail-list {
+	li {
+		@apply my-2 flex items-start;
+		& > span:first-child {
+			@apply font-semibold w-32 inline-block;
+		}
+		& > span:last-child {
+			@apply ml-2 w-[calc(100%-theme(space.32))] break-all inline-block;
+		}
+	}
+}
+
+.scrollbar-trigger-wrapper {
+    & ::-webkit-scrollbar-thumb {
+        visibility: hidden;
+    }
+    &:hover ::-webkit-scrollbar-thumb {
+        visibility: visible;
+    }
+}
+
+.detail-list {
+	li {
+		@apply my-2 flex items-start;
+		& > span:first-child {
+			@apply font-semibold w-32 inline-block;
+		}
+		& > span:last-child {
+			@apply ml-2 w-[calc(100%-theme(space.32))] break-all inline-block;
+		}
+	}
+}
+
+
+// hide edge input[type="password"] eye
+// https://stackoverflow.com/a/61450596/10519069
+input::-ms-reveal,
+input::-ms-clear {
+	@apply hidden;
+}
