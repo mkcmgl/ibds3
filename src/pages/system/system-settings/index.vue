@@ -40,7 +40,7 @@
             </p>
             <div class="ml-6 w-[calc(100%-8.5rem)] border-solid border-b flex justify-between items-center">
                 <p>
-                    已启用。数据上报地址：xxxxxx
+                    已启用。数据上报地址：http://xxxx
                 </p>
                 <button @click="showEditAddressDialog = true" class="w-8 text-blue-600 hover:text-blue-500" type="button">
                     修改
@@ -156,7 +156,7 @@
     <editAuthenticationDialog v-if="showEditAuthenticationDialog" v-model="showEditAuthenticationDialog" />
 </template>
 
-<script setup>
+<script  setup>
 import editPasswordDialog from "./edit-password-dialog.vue";
 import editAddressDialogVue from "./edit-address-dialog.vue";
 import editAuthenticationDialog from "./edit-authentication-dialog.vue";
@@ -182,5 +182,9 @@ export default {
 
         }
     },
+    created() {
+        this.$route.params.setSelection == 2?this.setSelection=2:this.setSelection=1;
+    },
+
 }
 </script>

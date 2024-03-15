@@ -263,6 +263,14 @@ const routes = [
                 beforeEnter: admin,
             },
             {
+                // admin 数据统计 detail
+                path: 'system/setting/:setSelection',
+                name: 'system/setting/setSelection',
+                props: true,
+                component: () => import('~/pages/system/system-settings/index.vue'),
+                beforeEnter: admin,
+            },
+            {
                 // admin 基础配置 index
                 path: 'system/setting/edit-personalized',
                 name: 'system/setting/edit-personalized',

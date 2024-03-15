@@ -26,7 +26,7 @@
                 个性化信息
             </p>
         </div>
-        <el-form ref="settingFormRef" :model="settingForm" :rules="settingRules" label-width="120px"
+        <el-form  label-position="left" ref="settingFormRef" :model="settingForm" :rules="settingRules" label-width="120px"
             class="demo-ruleForm text-sm flex-1 max-w-[750px] m-auto" :size="formSize">
             <el-form-item label="系统名称" prop="systemName">
                 <el-input v-model="settingForm.systemName" placeholder="请输入系统名称" />
@@ -34,12 +34,47 @@
             <el-form-item label="英文名称" prop="esName">
                 <el-input v-model="settingForm.esName" placeholder="请输入英文名称" />
             </el-form-item>
-            <el-form-item label="版权信息" prop="copyrightMsg">
-                <el-input v-model="settingForm.copyrightMsg" placeholder="请输入版权信息" />
-            </el-form-item>
 
+            <el-form-item label="LOGO" prop="logo">
+                <el-upload class="uploadImg" v-model:file-list="fileList" :class="{ uploadImgDisabled: uploadDisabled1 }"
+                    action="#" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"
+                    :on-success="handleSuccess" :limit="1">
+                    <el-icon>
+                        <Plus />
+                    </el-icon>
+                </el-upload>
+
+
+            </el-form-item>
+            <el-form-item label="登陆页背景图" prop="loginImg">
+                <el-upload class="uploadImg" v-model:file-list="fileList" :class="{ uploadImgDisabled: uploadDisabled1 }"
+                    action="#" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"
+                    :on-success="handleSuccess" :limit="1">
+                    <el-icon>
+                        <Plus />
+                    </el-icon>
+                </el-upload>
+
+            </el-form-item>
+            <el-form-item label="注册页背景图" prop="registerImg">
+                <el-upload class="uploadImg" v-model:file-list="fileList" :class="{ uploadImgDisabled: uploadDisabled1 }"
+                    action="#" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"
+                    :on-success="handleSuccess" :limit="1">
+                    <el-icon>
+                        <Plus />
+                    </el-icon>
+                </el-upload>
+            </el-form-item>
+            <el-form-item label="版权信息" prop="copyrightMsg">
+                <el-input type="textarea" maxlength="50" show-word-limit autosize v-model="settingForm.copyrightMsg"
+                    placeholder="请输入版权信息" />
+            </el-form-item>
         </el-form>
 
+
+        <el-dialog v-model="dialogVisible">
+            <img w-full :src="dialogImageUrl" alt="Preview Image" />
+        </el-dialog>
     </div>
 </template>
 
@@ -53,7 +88,25 @@ import PlusIcon from '~/components/icons/plus.vue';
 
 import DataStatisticsIndexTr from '~/prefabs/data-storage/tr.vue';
 
+import { Plus } from '@element-plus/icons-vue'
+const dialogImageUrl = ref('')
+const dialogVisible = ref(false)
+const disabled = ref(false)
+const fileList = ref([])
+const handleRemove = (uploadFile, uploadFiles) => {
+    console.log(uploadFile, uploadFiles)
+    console.log(`output->fileList.value`, fileList.value);
 
+}
+const handlePictureCardPreview = (file) => {
+    dialogImageUrl.value = file.url
+    dialogVisible.value = true
+}
+
+const handleSuccess = (file) => {
+    console.log(file)
+    console.log(`output->fileList.value`, fileList.value);
+}
 </script>
 
 <script>
@@ -98,36 +151,68 @@ export default {
                         max: 50,
                         message: "版权信息长度必须介于 1 和 50 之间",
                         trigger: "blur",
-                    }, 
-                ]
+                    },
+                ],
+                logo: [
+                    { required: true, message: "请上传LOGO", trigger: "blur" },
+                ],
+                loginImg: [
+                    { required: true, message: "请上传登陆页背景图", trigger: "blur" },
+                ],
+                registerImg: [
+                    { required: true, message: "请上传注册页背景图", trigger: "blur" },
+                ],
             }
 
         }
     },
     created() {
-       
+
     },
-    onMounted() { 
-         this.reseForm();
+    onMounted() {
+        this.resetForm();
     },
     methods: {
         back() {
-            this.$router.back();
+            this.$router.push({
+                name: 'system/setting/setSelection',
+                params: {
+                    setSelection: '2'
+                }
+            });
         },
-        submitSettingForm(formName) { 
+        submitSettingForm(formName) {
             this.$refs[formName].validate((valid) => {
-                if (valid) { 
+                if (valid) {
                     console.log(`output111`);
                 } else {
                     console.log('error submit!!');
-                    this.reseForm();
                     return false;
                 }
-             })
+            })
         },
-        reseForm() { 
-            this.$refs.settingFormRef.resetFields() 
+        resetForm() {
+            this.$refs.settingFormRef.resetFields()
         },
     },
 }
 </script>
+<style lang="scss" scoped>
+.uploadImg {
+    margin-right: 1rem;
+
+    ::v-deep(.el-upload-dragger) {
+        height: 100%;
+    }
+
+    ::v-deep(.el-icon--close-tip) {
+        display: none !important;
+    }
+}
+
+.uploadImgDisabled {
+    ::v-deep(.el-upload--picture-card) {
+        display: none;
+    }
+}
+</style>
