@@ -184,7 +184,7 @@ export default {
         submitSettingForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    console.log(`output111`);
+                    console.log(`output`);
                 } else {
                     console.log('error submit!!');
                     return false;
